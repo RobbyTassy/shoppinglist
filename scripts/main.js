@@ -1,6 +1,17 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Loading in React Router
+var ReactRouter = require('react-router');
+// ^ npm install react-router --save-dev
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Navigation = ReactRouter.Navigation;
+var createBrowserHistory = require('history/lib/createBrowserHistory');
+// ^ npm install history:  load in required code to do HTML5 push state,
+// push state meaning browsers back/forward button will still update component states
+
+
 // App
 
 var App = React.createClass ({
@@ -8,7 +19,7 @@ var App = React.createClass ({
     return (
       <div className="catch-of-the-day">
         <div className="menu">
-        {/* props sorta work like HTML attributes in that pass data into other components*/}
+        {/* props sorta work like HTML attributes in that pass data into other elements/components */}
           <Header tagline="Fresh Seafood Market"></Header>
         </div>
         <Order></Order>
@@ -75,4 +86,24 @@ var StorePicker = React.createClass({
   }
 });
 
-ReactDOM.render(<App/>, document.querySelector('#main'))
+// Not found
+
+var NotFound = React.createClass ({
+  render : function() {
+    return <h1>Not Found!</h1>
+  }
+});
+
+// Routes
+
+var routes = (
+  <Router history={createBrowserHistory()}>
+    <Route path="/" component={StorePicker}></Route>
+    <Route path="/store/:storeId" component={App}></Route>
+    <Route path="*" component={NotFound}></Route>
+  </Router>
+)
+
+
+
+ReactDOM.render(routes, document.querySelector('#main'))
