@@ -8,7 +8,8 @@ var App = React.createClass ({
     return (
       <div className="catch-of-the-day">
         <div className="menu">
-          <Header></Header>
+        {/* props sorta work like HTML attributes in that pass data into other components*/}
+          <Header tagline="Fresh Seafood Market"></Header>
         </div>
         <Order></Order>
         <Inventory></Inventory>
@@ -22,7 +23,15 @@ var App = React.createClass ({
 var Header = React.createClass ({
   render : function() {
     return (
-      <p>Header</p>
+      <header className="top">
+        <h1>Catch
+          <span className="ofThe">
+            <span className="of">of</span>
+            <span className="the">the</span>
+          </span>
+        Day</h1>
+        <h3 className="tagline"><span>{this.props.tagline}</span></h3>
+      </header>
     )
   }
 })

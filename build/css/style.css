@@ -259,8 +259,8 @@ header.top {
   text-align: center;
 }
 header.top h1 {
-  font-size: 14.4rem;
-  line-height: 0.7;
+  font-size: 9rem;
+  line-height: 0.9;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -275,7 +275,7 @@ header.top h1 .ofThe {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  font-size: 3rem;
+  font-size: 2rem;
   color: #f5a623;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
