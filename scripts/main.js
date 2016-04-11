@@ -17,6 +17,24 @@ var h = require('./helpers.js');  // Calls another file in your applications fol
 // App
 
 var App = React.createClass ({
+  getInitialState : function() { // Part of React Life cycle. Generally a blank state, and where you start off with.
+    // before it creates component, it will run getInitialState and populate itself with preset data.
+    return {  // Return initial state, which is an object
+      fishes : {}, // Blank initial object. To be populated once we begin clicking buttons.
+      order : {}  // Blank initial object. To be populated once we begin clicking buttons.
+    }
+  },
+
+  addFish : function(fish) {
+    var timestamp = (new Date()).getTime(); // Used for unique key purposes, returns
+    // how many milliseconds since 1/1/1970 - always typically unique
+
+    // UPDATE STATE OBJECT:
+    this.state.fishes['fish-' + timestamp] = fish;
+    // SET STATE OBJECT:
+    this.setState({ fishes : this.state.fishes });
+  },
+
   render : function() {
     return (
       <div className="catch-of-the-day">
@@ -25,11 +43,52 @@ var App = React.createClass ({
           <Header tagline="Fresh Seafood Market"></Header>
         </div>
         <Order></Order>
-        <Inventory></Inventory>
+        <Inventory addFish={this.addFish}></Inventory>
       </div>
     )
   }
 })
+
+
+// Add Fish Form
+
+var AddFishForm = React.createClass ({
+  createFish : function(event) {
+    // 1. STOP FORM FROM SUBMITTING
+    event.preventDefault();
+    // 2. TAKE THE DATA FROM THE FORM AND CREATE OBJECT
+    var fish = {
+      name : this.refs.name.value,
+      price : this.refs.price.value,
+      status : this.refs.status.value,
+      desc : this.refs.desc.value,
+      image : this.refs.image.value
+    }
+
+    // 3. ADD THE FISH TO THE APP STATE
+    this.props.addFish(fish);
+    this.refs.fishForm.reset();
+
+  },
+  render : function() {
+    return (
+      <form className="fish-edit" ref="fishForm" onSubmit={this.createFish}>
+        <input type="text" ref="name" placeholder="Fish Name"></input>
+        <input type="text" ref="price" placeholder="Fish Price"></input>
+        <select ref="status">
+          <option value="available">Fresh!</option>
+          <option value="unavailable">Sold Out!</option>
+        </select>
+        <textarea type="text" ref="desc" placeholder="Desc"></textarea>
+        <input type="text" ref="image" placeholder="URL to Image"></input>
+        <button type="submit">+ Add Item</button>
+      </form>
+    )
+  }
+
+})
+
+
 
 // Header
 
@@ -64,7 +123,11 @@ var Order = React.createClass ({
 var Inventory = React.createClass ({
   render : function() {
     return (
-      <p>Inventory</p>
+      <div>
+      <h2>Inventory</h2>
+      <AddFishForm {...this.props}></AddFishForm>
+      {/* {...this.props} Takes all props (methods) from current component and passes them down to childs component (AddFishForm) */}
+      </div>
     )
   }
 })
