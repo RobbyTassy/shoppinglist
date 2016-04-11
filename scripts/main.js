@@ -41,20 +41,42 @@ var App = React.createClass ({
     });
   },
 
+  renderFish : function(key) {
+    return <Fish key={key} index={key} details={this.state.fishes[key]}></Fish>
+  },
+
   render : function() {
     return (
       <div className="catch-of-the-day">
         <div className="menu">
         {/* props sorta work like HTML attributes in that pass data into other elements/components */}
           <Header tagline="Fresh Seafood Market"></Header>
+          <ul className="list-of-fishes">
+          {Object.keys(this.state.fishes).map(this.renderFish)}
+          </ul>
         </div>
         <Order></Order>
         <Inventory addFish={this.addFish} loadSamples={this.loadSamples}></Inventory>
       </div>
     )
   }
-})
+});
 
+// Fish
+var Fish = React.createClass({
+  render : function() {
+    var details = this.props.details;
+    return (
+      <li className="menu-fish">
+       <img src={details.image} alt=""></img>
+       <h3 className="fish-name">{details.name}
+       <span className="price">{h.formatPrice(details.price)}</span>
+       </h3>
+       <p>{details.desc}</p>
+      </li>
+    )
+  }
+});
 
 // Add Fish Form
 
