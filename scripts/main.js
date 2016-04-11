@@ -11,6 +11,8 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 // ^ npm install history:  load in required code to do HTML5 push state,
 // push state meaning browsers back/forward button will still update component states
 
+var h = require('./helpers.js');  // Calls another file in your applications folder
+
 
 // App
 
@@ -78,7 +80,7 @@ var StorePicker = React.createClass({
     return (
     <form className="store-selector">
       <h2>Please enter a store</h2>
-      <input type="text" ref="storeId" required></input>
+      <input type="text" ref="storeId" defaultValue={h.getFunName()} required></input>
       <input type="submit"></input>
 
     </form>
