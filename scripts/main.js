@@ -8,9 +8,7 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Navigation = ReactRouter.Navigation;
 var History = ReactRouter.History;     // allows for pushState to happen on the URL. Refer to line 86
-var createBrowserHistory = require('history/lib/createBrowserHistory');
-// ^ npm install history:  load in required code to do HTML5 push state,
-// push state meaning browsers back/forward button will still update component states
+import { browserHistory } from 'react-router'
 
 
 var h = require('./helpers.js');  // Calls another file in your applications folder
@@ -78,12 +76,11 @@ This will make <StorePicker> element where I can put where I want.
 */
 
 var StorePicker = React.createClass({
-  mixins : [History],
   goToStore : function(event) {
     event.preventDefault();
     // get data from the input
     var storeId = this.refs.storeId.value;
-    this.history.pushState(null, '/store/' + storeId);  // performs a push state on the URL
+    browserHistory.push( '/store/' + storeId);  // performs a push state on the URL
     // transition from StorePicker to App
 
 
@@ -111,7 +108,7 @@ var NotFound = React.createClass ({
 // Routes
 
 var routes = (
-  <Router history={createBrowserHistory()}>
+  <Router history={browserHistory}>
     <Route path="/" component={StorePicker}></Route>
     <Route path="/store/:storeId" component={App}></Route>
     <Route path="*" component={NotFound}></Route>
