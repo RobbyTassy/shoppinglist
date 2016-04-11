@@ -35,6 +35,12 @@ var App = React.createClass ({
     this.setState({ fishes : this.state.fishes });
   },
 
+  loadSamples : function() {
+    this.setState({
+      fishes : require('./sample-fishes')
+    });
+  },
+
   render : function() {
     return (
       <div className="catch-of-the-day">
@@ -43,7 +49,7 @@ var App = React.createClass ({
           <Header tagline="Fresh Seafood Market"></Header>
         </div>
         <Order></Order>
-        <Inventory addFish={this.addFish}></Inventory>
+        <Inventory addFish={this.addFish} loadSamples={this.loadSamples}></Inventory>
       </div>
     )
   }
@@ -127,6 +133,8 @@ var Inventory = React.createClass ({
       <h2>Inventory</h2>
       <AddFishForm {...this.props}></AddFishForm>
       {/* {...this.props} Takes all props (methods) from current component and passes them down to childs component (AddFishForm) */}
+      <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
+      {/*props makes a method transferrable to child components*/}
       </div>
     )
   }
