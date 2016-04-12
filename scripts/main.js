@@ -29,7 +29,7 @@ var App = React.createClass ({
     // before it creates component, it will run getInitialState and populate itself with preset data.
     return {  // Return initial state, which is an object
       fishes : {}, // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
-      order : {}  // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into hereData
+      order : {}  // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
     }
   },
 
@@ -39,25 +39,28 @@ var App = React.createClass ({
 
     // UPDATE STATE OBJECT:
     // this.state refers to the entire object inside of getInitialState. In our case, fishes : {}
-    // we are passing this data into the key parameter inside of addFish(KEY)
-    this.state.fishes['fish-' + timestamp] = fish;
+    // we are assigning timestamp to each fish state created by putting it in [brackets]
     // this line of codes merely UPDATES the object, it does not render
+    this.state.fishes[ 'ID ' + timestamp ] = fish;
 
     // SET STATE OBJECT:
     // this.setState changes the object, then TELL IT what changed inside of ({ here }) and what it changed to
-    // here you must set state and explcitly pass it as well
+    // here you must set state and explcitly pass it as well (kinda weird, redundant, i know)
     // this is done like this so your DOM knows which is the original state and which is the HTML to be changed.
-    // so for perfomance optimiation purposes, so state does not become confused as to which state should be updating
+    // so for perfomance optimization purposes, and so state does not become confused as to which state is the original
     this.setState({ fishes : this.state.fishes });
   },
 
   loadSamples : function() {
+    // This will go into sample-fishes, grab the entire fish object, and set their state
     this.setState({
       fishes : require('./sample-fishes')
     });
   },
 
   renderFish : function(key) {
+    // when you render out an element in React, you should give it a unique key to track changes to each particular element
+    // this.state.fishes[key] will give us fish1, fish2, fish3
     return <Fish key={key} index={key} details={this.state.fishes[key]}></Fish>
   },
 
@@ -68,6 +71,12 @@ var App = React.createClass ({
         {/* props sorta work like HTML attributes in that pass data into other elements/components */}
           <Header tagline="Fresh Seafood Market"></Header>
           <ul className="list-of-fishes">
+          {/*
+            Object.keys will give us an array of all the keys in an object (like fish1, fish2, fish3)
+            this can be tested on console using Object.key($r.state.fishes).
+            map will take data in an array and return a new array
+            this will run once for every single fish in our state
+             */}
           {Object.keys(this.state.fishes).map(this.renderFish)}
           </ul>
         </div>
@@ -81,14 +90,13 @@ var App = React.createClass ({
 // Fish
 var Fish = React.createClass({
   render : function() {
-    var details = this.props.details;
     return (
       <li className="menu-fish">
-       <img src={details.image} alt=""></img>
-       <h3 className="fish-name">{details.name}
-       <span className="price">{h.formatPrice(details.price)}</span>
+       <img src={this.props.details.image} alt={this.props.details.name}></img>
+       <h3 className="fish-name">{this.props.details.name}
+        <span className="price">{h.formatPrice(this.props.details.price)}</span>
        </h3>
-       <p>{details.desc}</p>
+       <p>{this.props.details.desc}</p>
       </li>
     )
   }
@@ -112,7 +120,7 @@ var AddFishForm = React.createClass ({
     // this passes the addFish method down from the parent component (App) to the appropriate child component (AddFishForm)
     // to be used inside of the createFish method
     this.props.addFish(fish);
-    // this simply resets the fishForm by referencing its HTML attribute 
+    // this simply resets the fishForm by referencing its HTML attribute
     this.refs.fishForm.reset();
 
   },
