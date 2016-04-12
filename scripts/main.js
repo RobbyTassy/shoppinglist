@@ -33,6 +33,13 @@ var App = React.createClass ({
     }
   },
 
+  addToOrder : function(key) {
+    // updates state object for order without using IF statements. If an order fish exists, add one to it. If not, make its value one
+    this.state.order[key] = this.state.order[key] + 1 || 1;
+    // set states updates HTML
+    this.setState({ order : this.state.order });
+  },
+
   addFish : function(fish) {
     var timestamp = (new Date()).getTime(); // Used for unique key purposes, returns
     // how many milliseconds since 1/1/1970 - always typically unique
@@ -61,7 +68,7 @@ var App = React.createClass ({
   renderFish : function(key) {
     // when you render out an element in React, you should give it a unique key to track changes to each particular element
     // this.state.fishes[key] will give us fish1, fish2, fish3
-    return <Fish key={key} index={key} details={this.state.fishes[key]}></Fish>
+    return <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}></Fish>
   },
 
   render : function() {
@@ -89,6 +96,11 @@ var App = React.createClass ({
 
 // Fish
 var Fish = React.createClass({
+  onButtonClick : function() {
+    console.log('going to add fish ' + this.props.index);
+    this.props.addToOrder(this.props.index);
+
+  },
   render : function() {
     var isAvailable = (this.props.details.status == 'available' ? true : false);
     var buttonText = (isAvailable ? 'Add To Order' : 'Sold Out!');
@@ -99,7 +111,7 @@ var Fish = React.createClass({
         <span className="price">{h.formatPrice(this.props.details.price)}</span>
        </h3>
        <p>{this.props.details.desc}</p>
-       <button disabled={!isAvailable}>{buttonText}</button>
+       <button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button>
       </li>
     )
   }
