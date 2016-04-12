@@ -2,16 +2,18 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 // Loading in React Router
-var ReactRouter = require('react-router');
-// ^ npm install react-router --save-dev
+var ReactRouter = require('react-router'); // $ npm install react-router --save-dev
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Navigation = ReactRouter.Navigation;
 var History = ReactRouter.History;     // allows for pushState to happen on the URL. Refer to line 86
 import { browserHistory } from 'react-router'
-
-
 var h = require('./helpers.js');  // Calls another file in your applications folder
+
+ // Firebase
+ var Rebase = require('re-base'); // $ npm install re-base --save-dev
+ var base = Rebase.createClass('https://its-catch-of-the-day.firebaseio.com/');
+
 
 // What makes react, along with Ember and Angularjs so unique is the concept of states.
 // WHAT IS STATE?
@@ -26,11 +28,18 @@ var h = require('./helpers.js');  // Calls another file in your applications fol
 
 var App = React.createClass ({
   getInitialState : function() { // Part of React Life cycle. Generally a blank state, and where you start off with.
-    // before it creates component, it will run getInitialState and populate itself with preset data.
+    // before it creates component, it will run getInitialState and populate itself with preset data. Before component mounts
     return {  // Return initial state, which is an object
       fishes : {}, // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
       order : {}  // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
     }
+  },
+
+  componentDidMount : function() { // When component is put onto page and grabs everything from firebase to syncState. Occurs after rendering
+    base.syncState(this.props.params.storeId + '/fishes', { // Takes current states and syncs it with Firebase
+      context : this,
+      state : 'fishes'
+    });
   },
 
   addToOrder : function(key) {
