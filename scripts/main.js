@@ -74,6 +74,15 @@ var App = React.createClass ({
     this.setState({ order : this.state.order });
   },
 
+  removeFromOrder : function(key) {
+    // deletes state entirely
+    delete this.state.order[key];
+    // remember: afer each this.setState, you must tell Reach what just change (order) and to what (this.state.order)
+    this.setState({
+      order : this.state.order
+    })
+  },
+
   addFish : function(fish) {
     var timestamp = (new Date()).getTime(); // Used for unique key purposes, returns
     // how many milliseconds since 1/1/1970 - always typically unique
@@ -131,7 +140,7 @@ var App = React.createClass ({
           {Object.keys(this.state.fishes).map(this.renderFish)}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order}></Order>
+        <Order fishes={this.state.fishes} order={this.state.order} removeFromOrder={this.removeFromOrder}></Order>
         <Inventory addFish={this.addFish} loadSamples={this.loadSamples} fishes={this.state.fishes} linkState={this.linkState} removeFish={this.removeFish}></Inventory>
       </div>
     )
@@ -226,9 +235,10 @@ var Order = React.createClass ({
   renderOrder : function(key) {
     var fish = this.props.fishes[key];
     var count = this.props.order[key];
+    var removeButton = <button onClick={this.props.removeFromOrder.bind(null, key)}>&times;</button>
 
     if(!fish) {
-      return <li key={key}>Sorry, fish no longer available!</li>
+      return <li key={key}>Sorry, fish no longer available! {removeButton}</li>
     }
 
     return (
@@ -236,6 +246,7 @@ var Order = React.createClass ({
         {count}lbs
         {fish.name}
         <span className="price">{h.formatPrice(count * fish.price)}</span>
+        {removeButton}
       </li>
     )
   },
