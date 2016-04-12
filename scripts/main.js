@@ -40,6 +40,22 @@ var App = React.createClass ({
       context : this,
       state : 'fishes'
     });
+
+    var localStorageRef = localStorage.getItem(this.props.params.storeId);
+    if(localStorageRef) {
+      // update our component state to reflect what is in localStorage
+      this.setState({
+        order : JSON.parse(localStorageRef)
+      });
+    }
+  },
+
+  // Anytime props changes (like number of fishes changes or order) or anytime state changes (like what is in our order and in our fishes)
+  // then it will run and pass us new props and new states. An event listener for when th data is changed
+
+  componentWillUpdate : function(nextProps, nextState) {
+    localStorage.setItem(this.props.params.storeId, JSON.stringify(nextState.order));
+
   },
 
   addToOrder : function(key) {
@@ -106,7 +122,6 @@ var App = React.createClass ({
 // Fish
 var Fish = React.createClass({
   onButtonClick : function() {
-    console.log('going to add fish ' + this.props.index);
     this.props.addToOrder(this.props.index);
 
   },
@@ -198,7 +213,7 @@ var Order = React.createClass ({
     }
 
     return (
-      <li>
+      <li key={key}>
         {count}lbs
         {fish.name}
         <span className="price">{h.formatPrice(count * fish.price)}</span>
