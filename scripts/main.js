@@ -8,11 +8,18 @@ var Route = ReactRouter.Route;
 var Navigation = ReactRouter.Navigation;
 var History = ReactRouter.History;     // allows for pushState to happen on the URL. Refer to line 86
 import { browserHistory } from 'react-router'
-var h = require('./helpers.js');  // Calls another file in your applications folder
+var h = require('./helpers.js');  // calls another file in your applications folder
 
  // Firebase
  var Rebase = require('re-base'); // $ npm install re-base --save-dev
  var base = Rebase.createClass('https://its-catch-of-the-day.firebaseio.com/');
+
+ // React Catalyst
+ // Allows for use of bi-directional data flow, useful for inventory management or updating in two places at one time
+ // You can take something in your state and link it up with your input. When that input changes, it also changes your state
+ // Does all the listeners like keyUp and Change and don't need to Bind just call linkState on it
+ // Only problem with this, only works at top level - only data inside of the initial state can be called (but you can reach lower levels by coding it yourself)
+ var Catalyst = require('react-catalyst');  // $ npm install react-catalyst --save-dev
 
 
 // What makes react, along with Ember and Angularjs so unique is the concept of states.
@@ -27,6 +34,8 @@ var h = require('./helpers.js');  // Calls another file in your applications fol
 // App
 
 var App = React.createClass ({
+  // Going to take LinkedStateMixin and make it available anywhere inside of App
+  mixins : [Catalyst.LinkedStateMixin],
   getInitialState : function() { // Part of React Life cycle. Generally a blank state, and where you start off with.
     // before it creates component, it will run getInitialState and populate itself with preset data. Before component mounts
     return {  // Return initial state, which is an object
@@ -113,7 +122,7 @@ var App = React.createClass ({
           </ul>
         </div>
         <Order fishes={this.state.fishes} order={this.state.order}></Order>
-        <Inventory addFish={this.addFish} loadSamples={this.loadSamples}></Inventory>
+        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} fishes={this.state.fishes} linkState={this.linkState}></Inventory>
       </div>
     )
   }
@@ -254,10 +263,28 @@ var Order = React.createClass ({
 // Inventory
 
 var Inventory = React.createClass ({
+  renderInventory : function(key) {
+    return (
+      <div className='fish-edit' key={key}>
+      {/*linkState is a method available through Mixin */}
+        <input type="text" valueLink={this.props.linkState('fishes.' + key + '.name')}></input>
+        <input type="text" valueLink={this.props.linkState('fishes.' + key + '.price')}></input>
+        <select valueLink={this.props.linkState('fishes.' + key + '.status')}>
+          <option value="available">Fresh!</option>
+          <option value="unavailable">Sold Out!</option>
+        </select>
+        <textarea type="text" valueLink={this.props.linkState('fishes.' + key + '.desc')}></textarea>
+        <input type="text" valueLink={this.props.linkState('fishes.' + key + '.image')}></input>
+      </div>
+    )
+  },
   render : function() {
     return (
       <div>
       <h2>Inventory</h2>
+      {/* this will give us all they keys for our fishes (fish1, fish2, etc.)*/}
+      {/* For each key, it will run it against renderInventory, a function that will return an edited render blocl*/}
+      {Object.keys(this.props.fishes).map(this.renderInventory)}
       <AddFishForm {...this.props}></AddFishForm>
       {/* {...this.props} Takes all props (methods) from current component and passes them down to the selected childs component (AddFishForm) known as a SPREAD */}
       <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
