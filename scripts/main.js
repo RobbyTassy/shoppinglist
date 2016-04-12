@@ -13,6 +13,14 @@ import { browserHistory } from 'react-router'
 
 var h = require('./helpers.js');  // Calls another file in your applications folder
 
+// What makes react, along with Ember and Angularjs so unique is the concept of states.
+// WHAT IS STATE?
+// State is a represenation of all of your components data. A big oject that holds all the info relating
+// to your component. The data in your component you wish to manipulate the most typically are states.
+// state is your master copy of all of your data. In React, you don't save data in your DOM (like jQuery),
+// all data is stored in the HTML. When updating, we change our STATE and React changes our HTML accordingly.
+// wherever STATE is referenced in your JSX, its populated accordingly everywhere.
+// one big visualization of all your data
 
 // App
 
@@ -20,8 +28,8 @@ var App = React.createClass ({
   getInitialState : function() { // Part of React Life cycle. Generally a blank state, and where you start off with.
     // before it creates component, it will run getInitialState and populate itself with preset data.
     return {  // Return initial state, which is an object
-      fishes : {}, // Blank initial object. To be populated once we begin clicking buttons.
-      order : {}  // Blank initial object. To be populated once we begin clicking buttons.
+      fishes : {}, // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
+      order : {}  // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into hereData
     }
   },
 
@@ -30,8 +38,16 @@ var App = React.createClass ({
     // how many milliseconds since 1/1/1970 - always typically unique
 
     // UPDATE STATE OBJECT:
+    // this.state refers to the entire object inside of getInitialState. In our case, fishes : {}
+    // we are passing this data into the key parameter inside of addFish(KEY)
     this.state.fishes['fish-' + timestamp] = fish;
+    // this line of codes merely UPDATES the object, it does not render
+
     // SET STATE OBJECT:
+    // this.setState changes the object, then TELL IT what changed inside of ({ here }) and what it changed to
+    // here you must set state and explcitly pass it as well
+    // this is done like this so your DOM knows which is the original state and which is the HTML to be changed.
+    // so for perfomance optimiation purposes, so state does not become confused as to which state should be updating
     this.setState({ fishes : this.state.fishes });
   },
 
@@ -92,9 +108,11 @@ var AddFishForm = React.createClass ({
       desc : this.refs.desc.value,
       image : this.refs.image.value
     }
-
     // 3. ADD THE FISH TO THE APP STATE
+    // this passes the addFish method down from the parent component (App) to the appropriate child component (AddFishForm)
+    // to be used inside of the createFish method
     this.props.addFish(fish);
+    // this simply resets the fishForm by referencing its HTML attribute 
     this.refs.fishForm.reset();
 
   },
@@ -154,7 +172,7 @@ var Inventory = React.createClass ({
       <div>
       <h2>Inventory</h2>
       <AddFishForm {...this.props}></AddFishForm>
-      {/* {...this.props} Takes all props (methods) from current component and passes them down to childs component (AddFishForm) */}
+      {/* {...this.props} Takes all props (methods) from current component and passes them down to the selected childs component (AddFishForm) known as a SPREAD */}
       <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
       {/*props makes a method transferrable to child components*/}
       </div>
