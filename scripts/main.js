@@ -24,8 +24,8 @@ var h = require('./helpers.js');  // calls another file in your applications fol
  var Catalyst = require('react-catalyst');  // $ npm install react-catalyst --save-dev
 
 
-// What makes react, along with Ember and Angularjs so unique is the concept of states.
 // WHAT IS STATE?
+// What makes react, along with Ember and Angularjs so unique is the concept of states.
 // State is a represenation of all of your components data. A big oject that holds all the info relating
 // to your component. The data in your component you wish to manipulate the most typically are states.
 // state is your master copy of all of your data. In React, you don't save data in your DOM (like jQuery),
