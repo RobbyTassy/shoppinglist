@@ -228,6 +228,12 @@ var Header = React.createClass ({
         <h3 className="tagline"><span>{this.props.tagline}</span></h3>
       </header>
     )
+  },
+  propTypes : {
+    // proptypes (or Propr validation) allows for your code (or yours props) to become more resilient
+    // other users of the component. failed code will throw an error to the coder in the console
+    // propTypes validates details coming in from properties (or states)
+    tagline : React.PropTypes.string.isRequired
   }
 })
 
@@ -248,9 +254,8 @@ var Order = React.createClass ({
         <span>
           <CSSTransitionGroup component="span" transitionName="count"
           transitionLeaveTimeout={250} transitionEnterTimeout={250}>
-            <span key={count}>{count}</span>
+            <span key={count}>{count}lbs</span>
           </CSSTransitionGroup>
-          lbs
           {fish.name}
           {removeButton}
           </span>
@@ -293,6 +298,11 @@ var Order = React.createClass ({
         </CSSTransitionGroup>
       </div>
     )
+  },
+  propTypes : {
+    fishes : React.PropTypes.object.isRequired,
+    order : React.PropTypes.object.isRequired,
+    removeFromOrder : React.PropTypes.func.isRequired
   }
 })
 
@@ -329,6 +339,13 @@ var Inventory = React.createClass ({
       {/*props makes a method transferrable to child components*/}
       </div>
     )
+  },
+  propTypes : {
+    addFish : React.PropTypes.func.isRequired,
+    loadSamples : React.PropTypes.func.isRequired,
+    fishes : React.PropTypes.object.isRequired,
+    linkState : React.PropTypes.func.isRequired,
+    removeFish : React.PropTypes.func.isRequired
   }
 })
 
