@@ -1,11 +1,13 @@
 // App
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Fish from './Fish';
 import Header from './Header';
 import Inventory from './Inventory';
 import Order from './Order';
+import reactMixin from 'react-mixin';
+import autobind from 'autobind-decorator';
+
 
 // React CSS // $ npm install react-addons-css-transition-group --save-dev
 var CSSTransitionGroup = require('react-addons-css-transition-group');
@@ -30,18 +32,23 @@ var h = require('../helpers.js');  // calls another file in your applications fo
  // wherever STATE is referenced in your JSX, its populated accordingly everywhere.
  // one big visualization of all your data
 
-var App = React.createClass ({
-  // Going to take LinkedStateMixin and make it available anywhere inside of App
-  mixins : [Catalyst.LinkedStateMixin],
-  getInitialState : function() { // Part of React Life cycle. Generally a blank state, and where you start off with.
-    // before it creates component, it will run getInitialState and populate itself with preset data. Before component mounts
-    return {  // Return initial state, which is an object
-      fishes : {}, // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
-      order : {}  // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
-    }
-  },
+@autobind
+class App extends React.Component {
 
-  componentDidMount : function() { // When component is put onto page and grabs everything from firebase to syncState. Occurs after rendering
+  // This replaces getInitialState, which is Part of React Life cycle. Generally a blank state, and where you start off with.
+  // before it creates component, it will run constructor and populate itself with preset data. Before component mounts
+  constructor() {
+    // in ES6, parent constructor must be called which in this case is React.Component
+    super()
+
+    this.state = {
+      fishes : {}, // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
+      order : {} // Blank initial object. To be populated once we begin clicking buttons. Data later becomes pushed into here
+    }
+  }
+
+
+  componentDidMount() { // When component is put onto page and grabs everything from firebase to syncState. Occurs after rendering
     base.syncState(this.props.params.storeId + '/fishes', { // Takes current states and syncs it with Firebase
       context : this,
       state : 'fishes'
@@ -54,33 +61,32 @@ var App = React.createClass ({
         order : JSON.parse(localStorageRef)
       });
     }
-  },
+  }
 
   // Anytime props changes (like number of fishes changes or order) or anytime state changes (like what is in our order and in our fishes)
   // then it will run and pass us new props and new states. An event listener for when th data is changed
-
-  componentWillUpdate : function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     localStorage.setItem(this.props.params.storeId, JSON.stringify(nextState.order));
 
-  },
+  }
 
-  addToOrder : function(key) {
+  addToOrder(key) {
     // updates state object for order without using IF statements. If an order fish exists, add one to it. If not, make its value one
     this.state.order[key] = this.state.order[key] + 1 || 1;
     // set states updates HTML
     this.setState({ order : this.state.order });
-  },
+  }
 
-  removeFromOrder : function(key) {
+  removeFromOrder(key) {
     // deletes state entirely
     delete this.state.order[key];
     // remember: afer each this.setState, you must tell Reach what just change (order) and to what (this.state.order)
     this.setState({
       order : this.state.order
     })
-  },
+  }
 
-  addFish : function(fish) {
+  addFish(fish) {
     // how many milliseconds since 1/1/1970 - always typically unique
     var timestamp = (new Date()).getTime(); // Used for unique key purposes, returns
 
@@ -96,9 +102,9 @@ var App = React.createClass ({
     // this is done like this so your DOM knows which is the original state and which is the HTML to be changed.
     // so for perfomance optimization purposes, and so state does not become confused as to which state is the original
     this.setState({ fishes : this.state.fishes });
-  },
+  }
 
-  removeFish : function(key) {
+  removeFish(key) {
     if(confirm("Are you sure you want to remove this fish?")) {
       this.state.fishes[key] = null;
       // this actually triggers re-render
@@ -106,22 +112,22 @@ var App = React.createClass ({
         fishes : this.state.fishes
       });
     }
-  },
+  }
 
-  loadSamples : function() {
+  loadSamples() {
     // This will go into sample-fishes, grab the entire fish object, and set their state
     this.setState({
       fishes : require('../sample-fishes')
     });
-  },
+  }
 
-  renderFish : function(key) {
+  renderFish(key) {
     // when you render out an element in React, you should give it a unique key to track changes to each particular element
     // this.state.fishes[key] will give us fish1, fish2, fish3
     return <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}></Fish>
-  },
+  }
 
-  render : function() {
+  render() {
     return (
       <div className="catch-of-the-day">
         <div className="menu">
@@ -138,10 +144,14 @@ var App = React.createClass ({
           </ul>
         </div>
         <Order fishes={this.state.fishes} order={this.state.order} removeFromOrder={this.removeFromOrder}></Order>
-        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} fishes={this.state.fishes} linkState={this.linkState} removeFish={this.removeFish}></Inventory>
+        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} fishes={this.state.fishes} linkState={this.linkState.bind(this)} removeFish={this.removeFish}></Inventory>
       </div>
     )
   }
-});
 
+
+};
+
+// Takes LinkedStateMixin and makes it available anywhere inside of App
+reactMixin.onClass(App, Catalyst.LinkedStateMixin);
 export default App;

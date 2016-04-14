@@ -25,4 +25,5 @@ class Header extends React.Component {
     tagline : React.PropTypes.string.isRequired
   }
 
+
 export default Header;
