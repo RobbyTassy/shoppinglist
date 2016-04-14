@@ -24,7 +24,14 @@ var h = require('./helpers.js');  // calls another file in your applications fol
  var Catalyst = require('react-catalyst');  // $ npm install react-catalyst --save-dev
 
 
-// WHAT IS STATE?
+
+//Import Components
+// Require is the 'node.js' way of doing imports.
+// This is the JS ES6 way of doing imports
+import NotFound from './components/NotFound';
+import StorePicker from './components/StorePicker';
+
+
 // What makes react, along with Ember and Angularjs so unique is the concept of states.
 // State is a represenation of all of your components data. A big oject that holds all the info relating
 // to your component. The data in your component you wish to manipulate the most typically are states.
@@ -350,40 +357,10 @@ var Inventory = React.createClass ({
 })
 
 
-/*
-StorePicker
-This will make <StorePicker> element where I can put where I want.
-*/
-
-var StorePicker = React.createClass({
-  goToStore : function(event) {
-    event.preventDefault();
-    // get data from the input
-    var storeId = this.refs.storeId.value;
-    browserHistory.push( '/store/' + storeId);  // performs a push state on the URL
-    // transition from StorePicker to App
 
 
-  },
-  render : function() {
-    return (
-    <form className="store-selector" onSubmit={this.goToStore}>
-      <h2>Please enter a store</h2>
-      <input type="text" ref="storeId" defaultValue={h.getFunName()} required></input>
-      <input type="submit"></input>
 
-    </form>
-    )
-  }
-});
 
-// Not found
-
-var NotFound = React.createClass ({
-  render : function() {
-    return <h1>Not Found!</h1>
-  }
-});
 
 // Routes
 
