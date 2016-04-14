@@ -6,23 +6,21 @@ import Header from './Header';
 import Inventory from './Inventory';
 import Order from './Order';
 import reactMixin from 'react-mixin';
-import autobind from 'autobind-decorator';
 
-
-// React CSS // $ npm install react-addons-css-transition-group --save-dev
+// React CSS - $ npm install react-addons-css-transition-group --save-dev
 var CSSTransitionGroup = require('react-addons-css-transition-group');
-var h = require('../helpers.js');  // calls another file in your applications folder
+var h = require('../helpers.js');  // calls another file into your applications folder
 
- // Firebase
- import Rebase from 're-base'; // $ npm install re-base --save-dev
+ // Firebase (or rebase for React) - $ npm install re-base --save-dev
+ import Rebase from 're-base';
  var base = Rebase.createClass('https://its-catch-of-the-day.firebaseio.com/');
 
- // React Catalyst
+ // React Catalyst - $ npm install react-catalyst --save-dev
  // Allows for use of bi-directional data flow, useful for inventory management or updating in two places at one time
  // You can take something in your state and link it up with your input. When that input changes, it also changes your state
  // Does all the listeners like keyUp and Change and don't need to Bind just call linkState on it
  // Only problem with this, only works at top level - only data inside of the initial state can be called (but you can reach lower levels by coding it yourself)
- import Catalyst from 'react-catalyst';  // $ npm install react-catalyst --save-dev
+ import Catalyst from 'react-catalyst';
 
  // What makes react, along with Ember and Angularjs so unique is the concept of states.
  // State is a represenation of all of your components data. A big oject that holds all the info relating
@@ -32,13 +30,18 @@ var h = require('../helpers.js');  // calls another file in your applications fo
  // wherever STATE is referenced in your JSX, its populated accordingly everywhere.
  // one big visualization of all your data
 
+ // Autobind decorator - $ npm install autobind-decorator --save-dev
+ // A class or method decorator which binds methods to the instance so 'this' is always correct, even when the method is detached.
+import autobind from 'autobind-decorator';
+
+// Usable on the class to bind all methods
 @autobind
 class App extends React.Component {
 
   // This replaces getInitialState, which is Part of React Life cycle. Generally a blank state, and where you start off with.
-  // before it creates component, it will run constructor and populate itself with preset data. Before component mounts
+  // before it creates component, it will run constructor and populate itself with preset data.  Happens before component mounts
   constructor() {
-    // in ES6, parent constructor must be called which in this case is React.Component
+    // in ES6, parent constructor must be called using super() which in this case is React.Component
     super()
 
     this.state = {

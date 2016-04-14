@@ -7,9 +7,11 @@ import React from 'react';
 import ReactDOM from 'react';
 import h from '../helpers';
 import { browserHistory } from 'react-router';
+import autobind from 'autobind-decorator';
 
-var StorePicker = React.createClass({
-  goToStore : function(event) {
+@autobind
+class StorePicker extends React.Component {
+  goToStore(event) {
     event.preventDefault();
     // get data from the input
     var storeId = this.refs.storeId.value;
@@ -17,8 +19,9 @@ var StorePicker = React.createClass({
     // transition from StorePicker to App
 
 
-  },
-  render : function() {
+  }
+
+  render() {
     return (
     <form className="store-selector" onSubmit={this.goToStore}>
       <h2>Please enter a store</h2>
@@ -28,6 +31,7 @@ var StorePicker = React.createClass({
     </form>
     )
   }
-});
+
+}
 
 export default StorePicker;
