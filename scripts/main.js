@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // React Router
-//  browserHistory allows for pushState to happen on the URL.
+// browserHistory allows for pushState to happen on the URL.
 import { browserHistory, ReactRouter, Router, Route } from 'react-router'; // $ npm install react-router --save-dev
+// import { } called ES6 destructuring
 
 
 //Import Components
@@ -13,15 +14,6 @@ import { browserHistory, ReactRouter, Router, Route } from 'react-router'; // $ 
 import App from './components/App';
 import NotFound from './components/NotFound';
 import StorePicker from './components/StorePicker';
-
-
-// What makes react, along with Ember and Angularjs so unique is the concept of states.
-// State is a represenation of all of your components data. A big oject that holds all the info relating
-// to your component. The data in your component you wish to manipulate the most typically are states.
-// state is your master copy of all of your data. In React, you don't save data in your DOM (like jQuery),
-// all data is stored in the HTML. When updating, we change our STATE and React changes our HTML accordingly.
-// wherever STATE is referenced in your JSX, its populated accordingly everywhere.
-// one big visualization of all your data
 
 
 // Routes
