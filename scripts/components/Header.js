@@ -1,6 +1,6 @@
-import React from 'react';
-
 // Header
+
+import React from 'react';
 
 var Header = React.createClass ({
   render : function() {

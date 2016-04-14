@@ -1,6 +1,6 @@
-import React from 'react';
-
 // Add Fish Form
+
+import React from 'react';
 
 var AddFishForm = React.createClass ({
   createFish : function(event) {

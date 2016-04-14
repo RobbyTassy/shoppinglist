@@ -4,6 +4,7 @@ This will make <StorePicker> element where I can put where I want.
 */
 
 import React from 'react';
+import ReactDOM from 'react';
 import h from '../helpers';
 import { browserHistory } from 'react-router';
 

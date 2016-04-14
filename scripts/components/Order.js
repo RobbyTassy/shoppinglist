@@ -1,8 +1,8 @@
-import React from 'react';
-var CSSTransitionGroup = require('react-addons-css-transition-group');// React CSS // $ npm install react-addons-css-transition-group --save-dev
-import h from '../helpers';
-
 // Order
+
+import React from 'react';
+import CSSTransitionGroup from 'react-addons-css-transition-group';// React CSS // $ npm install react-addons-css-transition-group --save-dev
+import h from '../helpers';
 
 var Order = React.createClass ({
   renderOrder : function(key) {
