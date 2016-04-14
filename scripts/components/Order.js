@@ -1,7 +1,7 @@
 // Order
 
 import React from 'react';
-import CSSTransitionGroup from 'react-addons-css-transition-group';// React CSS // $ npm install react-addons-css-transition-group --save-dev
+import CSSTransitionGroup from 'react-addons-css-transition-group';// React CSS - $ npm install react-addons-css-transition-group --save-dev
 import h from '../helpers';
 import autobind from 'autobind-decorator';
 
@@ -69,14 +69,13 @@ class Order extends React.Component {
       </div>
     )
   }
+};
 
-  propTypes : {
+  Order.propTypes = {
     fishes : React.PropTypes.object.isRequired,
     order : React.PropTypes.object.isRequired,
     removeFromOrder : React.PropTypes.func.isRequired
   }
-
-}
 
 
 export default Order;

@@ -23,8 +23,8 @@ var h = require('../helpers.js');  // calls another file into your applications 
  import Catalyst from 'react-catalyst';
 
  // What makes react, along with Ember and Angularjs so unique is the concept of states.
- // State is a represenation of all of your components data. A big oject that holds all the info relating
- // to your component. The data in your component you wish to manipulate the most typically are states.
+ // State is a represenation of all of your components data. A big object that holds all the info relating
+ // to your component. The data in your component you wish to manipulate most typically are states.
  // state is your master copy of all of your data. In React, you don't save data in your DOM (like jQuery),
  // all data is stored in the HTML. When updating, we change our STATE and React changes our HTML accordingly.
  // wherever STATE is referenced in your JSX, its populated accordingly everywhere.
@@ -91,7 +91,7 @@ class App extends React.Component {
 
   addFish(fish) {
     // how many milliseconds since 1/1/1970 - always typically unique
-    var timestamp = (new Date()).getTime(); // Used for unique key purposes, returns
+    var timestamp = (new Date()).getTime(); // Used for unique key purposes
 
     // UPDATE STATE OBJECT:
     // this.state refers to the entire object inside of getInitialState. In our case, fishes : {}

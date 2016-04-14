@@ -8,7 +8,6 @@ class Fish extends React.Component {
 
   onButtonClick() {
     this.props.addToOrder(this.props.index);
-
   }
 
   render() {
@@ -26,7 +25,7 @@ class Fish extends React.Component {
     )
   }
 
-}
+};
 
 
 export default Fish;

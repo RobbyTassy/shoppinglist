@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 
 @autobind
 class AddFishForm extends React.Component {
-  
+
   createFish(event) {
     // 1. STOP FORM FROM SUBMITTING
     event.preventDefault();
@@ -22,7 +22,6 @@ class AddFishForm extends React.Component {
     this.props.addFish(fish);
     // this simply resets the fishForm by referencing its HTML attribute
     this.refs.fishForm.reset();
-
   }
 
   render() {
@@ -41,7 +40,6 @@ class AddFishForm extends React.Component {
     )
   }
 
-
-}
+};
 
 export default AddFishForm;

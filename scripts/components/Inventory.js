@@ -39,8 +39,9 @@ class Inventory extends React.Component {
       </div>
     )
   }
+};
 
-  propTypes : {
+  Inventory.propTypes = {
     addFish : React.PropTypes.func.isRequired,
     loadSamples : React.PropTypes.func.isRequired,
     fishes : React.PropTypes.object.isRequired,
@@ -48,7 +49,6 @@ class Inventory extends React.Component {
     removeFish : React.PropTypes.func.isRequired
   }
 
-}
 
 
 
