@@ -41,7 +41,7 @@ class App extends React.Component {
   // This replaces getInitialState, which is Part of React Life cycle. Generally a blank state, and where you start off with.
   // before it creates component, it will run constructor and populate itself with preset data.  Happens before component mounts
   constructor() {
-    // in ES6, parent constructor must be called using super() which in this case is React.Component
+    // In ES6, parent constructor must be called using super() which in this case is React.Component
     super()
 
     this.state = {
@@ -151,8 +151,6 @@ class App extends React.Component {
       </div>
     )
   }
-
-
 };
 
 // Takes LinkedStateMixin and makes it available anywhere inside of App

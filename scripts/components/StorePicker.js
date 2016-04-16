@@ -11,7 +11,7 @@ import autobind from 'autobind-decorator';
 
 @autobind
 class StorePicker extends React.Component {
-  
+
   goToStore(event) {
     event.preventDefault();
     // get data from the input
@@ -32,7 +32,6 @@ class StorePicker extends React.Component {
     </form>
     )
   }
-
 }
 
 export default StorePicker;

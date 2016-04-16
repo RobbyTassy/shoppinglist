@@ -39,7 +39,6 @@ class AddFishForm extends React.Component {
       </form>
     )
   }
-
 };
 
 export default AddFishForm;
