@@ -80,6 +80,11 @@ class App extends React.Component {
     this.setState({ order : this.state.order });
   }
 
+  addAmountToOrder(key, num) {
+    this.state.order[key] = this.state.order[key] + num || num;
+    this.setState({ order : this.state.order });
+  }
+
   removeFromOrder(key) {
     // deletes state entirely
     delete this.state.order[key];
@@ -127,7 +132,7 @@ class App extends React.Component {
   renderFish(key) {
     // when you render out an element in React, you should give it a unique key to track changes to each particular element
     // this.state.fishes[key] will give us fish1, fish2, fish3
-    return <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}></Fish>
+    return <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder} addAmountToOrder={this.addAmountToOrder}></Fish>
   }
 
   render() {

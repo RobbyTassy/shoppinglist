@@ -7,12 +7,14 @@ import autobind from 'autobind-decorator';
 class Fish extends React.Component {
 
   onButtonClick() {
-    this.props.addToOrder(this.props.index);
+    var key = this.props.index;
+    var num = parseInt(this.refs.amount.value);
+    this.props.addAmountToOrder(key, num);
   }
 
   render() {
     var isAvailable = (this.props.details.status == 'available' ? true : false);
-    var buttonText = (isAvailable ? 'Just Add One' : 'Sold Out!');
+    var buttonText = (isAvailable ? 'Add' : 'Sold Out!');
     return (
       <li className="menu-fish">
        <img src={this.props.details.image} alt={this.props.details.name}></img>
@@ -20,8 +22,9 @@ class Fish extends React.Component {
         <span className="price">{h.formatPrice(this.props.details.price)}</span>
        </h3>
        <p>{this.props.details.desc}</p>
-       <p><input placeholder="How many?"></input><button>Add</button></p>
-       <button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button>
+       <p><input disabled={!isAvailable} type="text" ref="amount" placeholder="How many?"></input><button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button></p>
+
+
       </li>
     )
   }
