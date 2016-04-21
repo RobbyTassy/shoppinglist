@@ -4,6 +4,7 @@ import React from 'react';
 import CSSTransitionGroup from 'react-addons-css-transition-group';// React CSS - $ npm install react-addons-css-transition-group --save-dev
 import h from '../helpers';
 import autobind from 'autobind-decorator';
+import Fish from './Fish';
 
 @autobind
 class Order extends React.Component {
@@ -44,7 +45,7 @@ class Order extends React.Component {
       var isAvailable = fish && fish.status === 'available';
 
       if (fish && isAvailable) {
-        return prevTotal + (count + parseInt(fish.price) || 0);
+        return prevTotal + (count * parseInt(fish.price) || 0);
       }
       return prevTotal;
     }, 0);
@@ -57,8 +58,7 @@ class Order extends React.Component {
         component="ul"
         transitionName="order"
         transitionEnterTimeout={500}
-        transitionLeaveTimeout={500}
-        >
+        transitionLeaveTimeout={500}>
           {orderIds.map(this.renderOrder)}
           <li className="total">
             <strong>Total:</strong>

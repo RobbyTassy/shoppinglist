@@ -10,6 +10,7 @@ class Fish extends React.Component {
     var key = this.props.index;
     var num = parseInt(this.refs.amount.value);
     this.props.addAmountToOrder(key, num);
+    // console.log(this.refs.amount); // YOU LEFT OFF HERE DUDE
   }
 
   render() {
@@ -22,7 +23,7 @@ class Fish extends React.Component {
         <span className="price">{h.formatPrice(this.props.details.price)}</span>
        </h3>
        <p>{this.props.details.desc}</p>
-       <p><input disabled={!isAvailable} type="text" ref="amount" placeholder="How many?"></input><button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button></p>
+       <p><input disabled={!isAvailable} type="text" ref="amount" placeholder="How many?" required></input><button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button></p>
 
 
       </li>
