@@ -27,7 +27,7 @@ class Fish extends React.Component {
         <span className="price">{h.formatPrice(this.props.details.price)}</span>
        </h3>
        <p>{this.props.details.desc}</p>
-       <p><input disabled={!isAvailable} type="number" min="0" ref="amount" placeholder="How many?" required></input><button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button></p>
+       <p><input disabled={!isAvailable} type="number" min="0" step="1" ref="amount" placeholder="How many?" required></input><button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button></p>
 
 
       </li>
