@@ -8,14 +8,10 @@ class Fish extends React.Component {
 
   onButtonClick() {
     var key = this.props.index;
-    var num = parseInt(this.refs.amount.value || 1);
+    var num = Math.abs(parseInt(this.refs.amount.value || 1));
     this.props.addAmountToOrder(key, num);
-    // console.log(this.refs.amount); // YOU LEFT OFF HERE DUDE
-
-    if num > 0 {
-      console.log(num);
-    }
   }
+
 
   render() {
     var isAvailable = (this.props.details.status == 'available' ? true : false);
