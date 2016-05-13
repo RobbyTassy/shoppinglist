@@ -6,7 +6,8 @@ This will make <StorePicker> element where I can put where I want.
 import React from 'react';
 import ReactDOM from 'react';
 import h from '../helpers';
-import { browserHistory } from 'react-router';
+import { History } from 'react-router';
+import reactMixin from 'react-mixin';
 import autobind from 'autobind-decorator';
 
 @autobind
@@ -16,7 +17,7 @@ class StorePicker extends React.Component {
     event.preventDefault();
     // get data from the input
     var storeId = this.refs.storeId.value;
-    browserHistory.push( '/store/' + storeId);  // performs a push state on the URL
+    this.history.pushState(null, '/store/' + storeId); // performs a push state on the URL
     // transition from StorePicker to App
 
 
@@ -33,5 +34,7 @@ class StorePicker extends React.Component {
     )
   }
 }
+
+reactMixin.onClass(StorePicker, History);
 
 export default StorePicker;
